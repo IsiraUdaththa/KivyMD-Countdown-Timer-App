@@ -1,13 +1,10 @@
-
 from kivymd.app import MDApp
-
 from kivy.clock import Clock
 from kivy.core.window import Window
-from kivy.core.audio import SoundLoader
-
-# Window.size = (1920//2, 1080//2)
 
 from playsound import playsound
+
+Window.size = (1920, 1080)
 
 
 class MainApp(MDApp):
@@ -19,8 +16,6 @@ class MainApp(MDApp):
         super().__init__(**kwargs)
         self.title = 'Countdown Timer'
         Clock.schedule_interval(self.update_time, 0)
-
-        # print(Clock.schedule_interval(self.update_time, 0))
         # self.icon = f"{os.environ['PLAYER_ROOT']}/assets/images/logo.png"
 
     def build(self):
@@ -46,7 +41,7 @@ class MainApp(MDApp):
                                            f'[size=75].[/size]' \
                                            f'[size=75] {int(part_seconds):02}[/size]'
         # print(self.seconds, self.count_time)
-        self.root.ids.progress_bar.value = (self.seconds/self.count_time)*100
+        self.root.ids.progress_bar.value = (self.seconds / self.count_time) * 100
 
     def start_stop(self):
         self.root.ids.start_stop.text = 'START' if self.started else 'STOP'
@@ -57,25 +52,20 @@ class MainApp(MDApp):
         self.root.ids.min5.disabled = True if self.started else False
 
     def sound(self):
-        playsound('bell.mp3')
+        playsound('audio/bell.mp3')
 
     def min4(self):
-        # if self.started:
-        #     self.started = False
-        self.seconds = 60*4
-        self.count_time = 60 * 4
+        self.seconds = 60 * 4
+        self.count_time = self.seconds
         self.root.ids.start_stop.disabled = True if self.seconds == 0 else False
 
     def min5(self):
-        # if self.started:
-        #     self.started = False
-        self.seconds = 2
-        self.count_time = 60 * 5
+        # self.seconds = 60 * 5
+        self.seconds = 2  # for testing
+        self.count_time = self.seconds
         self.root.ids.start_stop.disabled = True if self.seconds == 0 else False
 
     def reset(self):
-        if self.started:
-            self.started = False
         self.seconds = 0
         self.root.ids.start_stop.disabled = True if self.seconds == 0 else False
 
