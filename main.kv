@@ -1,0 +1,59 @@
+MDScreen:
+    MDLabel:
+        id: stopwatch
+        markup: True
+        halign: 'center'
+        color : "black"
+        font_name: "OpenSans-Medium.ttf"
+
+    MDScreen:
+        radius: [25, 0, 0, 0]
+        pos_hint: {'center_x':0.5, "center_y": .9}
+        size_hint_x: 0.5
+        MDProgressBar:
+            id: progress_bar
+
+    FitImage:
+        opacity: 1
+        size_hint_y: 0.23
+        size_hint_x: 0.5
+#        height: "10dp"
+        source: "University_of_Peradeniya_crest-1.png"
+        pos_hint: {'center_x':0.5, 'center_y':0.8}
+
+
+    MDRectangleFlatButton:
+        text: 'Start'
+        id: start_stop
+        pos_hint: {'center_x':0.3, 'center_y':0.2}
+        font_name: "OpenSans-Medium.ttf"
+        on_release:
+            app.start_stop()
+
+    MDRectangleFlatButton:
+        text: 'Reset'
+        id: reset
+        pos_hint: {'center_x':0.4, 'center_y':0.2}
+        on_release:
+            app.reset()
+
+    MDRectangleFlatButton:
+        text: 'Bell'
+        id: sound
+        pos_hint: {'center_x':0.5, 'center_y':0.2}
+        on_release:
+            app.sound()
+
+    MDRectangleFlatButton:
+        text: '4 Minutes'
+        id: min4
+        pos_hint: {'center_x':0.6, 'center_y':0.2}
+        on_release:
+            app.min4()
+
+    MDRectangleFlatButton:
+        text: '5 Minutes'
+        id: min5
+        pos_hint: {'center_x':0.7, 'center_y':0.2}
+        on_release:
+            app.min5()
