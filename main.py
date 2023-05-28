@@ -1,7 +1,7 @@
 from kivymd.app import MDApp
 from kivy.clock import Clock
 from kivy.core.window import Window
-
+import pygame
 from playsound import playsound
 
 Window.size = (1920, 1080)
@@ -19,7 +19,6 @@ class MainApp(MDApp):
         # self.icon = f"{os.environ['PLAYER_ROOT']}/assets/images/logo.png"
 
     def build(self):
-        # self.theme_cls.theme_style = "Light"
         self.theme_cls.theme_style = "Light"
         self.theme_cls.primary_palette = "Orange"
         self.root.ids.start_stop.disabled = True if self.seconds == 0 else False
@@ -33,6 +32,10 @@ class MainApp(MDApp):
         if self.seconds < 0:
             self.root.ids.stopwatch.color = "red"
             self.seconds = 0
+        # if self.count_time == 60*5 and self.seconds == 60:
+        #     self.sound()
+        # if self.count_time == 60 * 4 and self.seconds == 30:
+        #     self.sound()
         else:
             self.root.ids.stopwatch.color = "black"
             self.root.ids.stopwatch.text = f'[size=150]{int(minutes):02}[/size]' \
@@ -40,7 +43,6 @@ class MainApp(MDApp):
                                            f'[size=150]{int(seconds):02}[/size]' \
                                            f'[size=75].[/size]' \
                                            f'[size=75] {int(part_seconds):02}[/size]'
-        # print(self.seconds, self.count_time)
         self.root.ids.progress_bar.value = (self.seconds / self.count_time) * 100
 
     def start_stop(self):
@@ -52,16 +54,27 @@ class MainApp(MDApp):
         self.root.ids.min5.disabled = True if self.started else False
 
     def sound(self):
-        playsound('audio/bell.mp3')
+        sound_file = 'audio/bell.mp3'
+        try:
+            pygame.mixer.init()
+            pygame.mixer.music.load(sound_file)
+            pygame.mixer.music.play()
+
+        except Exception as e:
+            print(f"Failed to load or play the audio file: {sound_file}")
+            print("Error message:", e)
+
+    def resume_app(self):
+        # Resume your application logic here after the sound finishes playing
+        pass
 
     def min4(self):
-        self.seconds = 60 * 4
+        self.seconds = 60*4
         self.count_time = self.seconds
         self.root.ids.start_stop.disabled = True if self.seconds == 0 else False
 
     def min5(self):
-        # self.seconds = 60 * 5
-        self.seconds = 2  # for testing
+        self.seconds = 60*5
         self.count_time = self.seconds
         self.root.ids.start_stop.disabled = True if self.seconds == 0 else False
 
